@@ -1,0 +1,14 @@
+﻿<MudStack AlignItems="AlignItems.End">
+    @if (IsOnline)
+    {
+        <MudButton @onclick="OpenDialog" Variant="Variant.Filled" Color="Color.Success" StartIcon="@Icons.Material.Filled.SignalWifiStatusbar4Bar">
+            Online
+        </MudButton>
+    }
+    else
+    {
+        <MudButton @onclick="OpenDialog" Variant="Variant.Filled" Color="Color.Error" StartIcon="@Icons.Material.Filled.SignalWifiOff">
+            Offline
+        </MudButton>
+    }
+</MudStack>

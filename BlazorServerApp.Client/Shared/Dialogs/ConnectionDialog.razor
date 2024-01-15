@@ -1,0 +1,28 @@
+﻿<MudDialog>
+    <DialogContent>
+        <MudStack Row="true">
+            @if (IsOnline)
+            {
+                <MudText Typo="Typo.h4" Color="Color.Success">Online</MudText>
+            }
+            else
+            {
+                <MudText Typo="Typo.h4" Color="Color.Error">Offline</MudText>
+            }
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="Submit">OK</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    MudDialogInstance MudDialog { get; set; }
+
+    [Parameter]
+    public bool IsOnline { get; set; }
+
+    void Submit() => MudDialog.Close(DialogResult.Ok(true));
+    void Cancel() => MudDialog.Cancel();
+}
