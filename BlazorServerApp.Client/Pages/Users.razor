@@ -1,0 +1,32 @@
+﻿@page "/users"
+@inject IUserService UserService
+
+<PageTitle>Users</PageTitle>
+
+<h1>Users</h1>
+
+@if (_users == null)
+{
+    <MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="my-7" />
+}
+else
+{
+    <MudDataGrid Items="@_users" Filterable="false" SortMode="@SortMode.None" Groupable="false">
+        <Columns>
+            <PropertyColumn Property="x => x.Id" />
+            <PropertyColumn Property="x => x.Name" />
+            <PropertyColumn Property="x => x.Email" />
+        </Columns>
+    </MudDataGrid>
+}
+
+@code {
+    private List<User>? _users;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        _users = await UserService.GetAll();
+        StateHasChanged();
+    }
+}

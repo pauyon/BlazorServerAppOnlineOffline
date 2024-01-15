@@ -1,3 +1,4 @@
+using BlazorServerApp.Client.Services.UserService;
 using BlazorServerApp.Client.Services.WeatherForecastService;
 using MudBlazor.Services;
 
@@ -10,6 +11,7 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddScoped<IWeatherForecastService, WeatherForecastService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 var app = builder.Build();
 
