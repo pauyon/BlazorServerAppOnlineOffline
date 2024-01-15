@@ -6,7 +6,7 @@ using MudBlazor;
 namespace BlazorServerApp.Client.Components
 {
     /// <summary>
-    /// Component that displays whether there is internet connection
+    /// Component that displays whether there is Internet connection
     /// </summary>
     public partial class Connection
     {
