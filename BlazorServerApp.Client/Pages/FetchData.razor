@@ -1,0 +1,34 @@
+﻿@page "/fetchdata"
+@using BlazorServerApp.Client.Data
+@inject WeatherForecastService ForecastService
+
+<PageTitle>Weather forecast</PageTitle>
+
+<MudText Typo="Typo.h2">Weather forecast</MudText>
+
+<p>This component demonstrates fetching data from a service.</p>
+
+@if (forecasts == null)
+{
+    <MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="my-7" />
+}
+else
+{
+    <MudDataGrid Items="@forecasts" Filterable="false" SortMode="@SortMode.None" Groupable="false">
+        <Columns>
+            <PropertyColumn Property="x => x.Date" />
+            <PropertyColumn Property="x => x.TemperatureC" Title="Temp. (C)" />
+            <PropertyColumn Property="x => x.TemperatureF" Title="Temp. (F)" />
+            <PropertyColumn Property="x => x.Summary" />
+        </Columns>
+    </MudDataGrid>
+}
+
+@code {
+    private List<WeatherForecast>? forecasts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        forecasts = await ForecastService.GetForecastAsync(DateOnly.FromDateTime(DateTime.Now));
+    }
+}
