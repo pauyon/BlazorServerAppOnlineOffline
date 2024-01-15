@@ -1,4 +1,4 @@
-namespace BlazorServerApp.Client.Data
+namespace BlazorServerApp.Domain.Models
 {
     public class WeatherForecast
     {

@@ -1,6 +1,8 @@
-namespace BlazorServerApp.Client.Data
+using BlazorServerApp.Domain.Models;
+
+namespace BlazorServerApp.Client.Services.WeatherForecastService
 {
-    public class WeatherForecastService
+    public class WeatherForecastService : IWeatherForecastService
     {
         private readonly HttpClient _httpClient;
 
@@ -9,7 +11,7 @@ namespace BlazorServerApp.Client.Data
             _httpClient = httpClient;
         }
 
-        public async Task<List<WeatherForecast>> GetForecastAsync(DateOnly startDate)
+        public async Task<List<WeatherForecast>> GetForecastAsync()
         {
             var forecasts = await _httpClient.GetFromJsonAsync<List<WeatherForecast>>("api/weatherforecast");
             return forecasts ?? new List<WeatherForecast>();
