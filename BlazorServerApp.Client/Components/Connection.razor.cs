@@ -1,4 +1,5 @@
-﻿using BlazorServerApp.Client.Shared.Dialogs;
+﻿using BlazorServerApp.Client.Shared;
+using BlazorServerApp.Client.Shared.Dialogs;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using MudBlazor;
@@ -10,11 +11,17 @@ namespace BlazorServerApp.Client.Components
     /// </summary>
     public partial class Connection
     {
+        [CascadingParameter]
+        public MainLayout? MainLayout { get; set; }
+
         [Inject]
         public IJSRuntime? JsRuntime { get; set; }
 
         [Inject]
         public IDialogService? DialogService { get; set; }
+
+        [Inject]
+        public NavigationManager? NavigationManager { get; set; }
 
         private void OpenDialog()
         {
@@ -35,6 +42,15 @@ namespace BlazorServerApp.Client.Components
             if (IsOnline != isOnline)
             {
                 IsOnline = isOnline;
+            }
+
+            var refreshPage = SiteConstants.IsOnline != isOnline;
+
+            SiteConstants.IsOnline = isOnline;
+
+            if (refreshPage)
+            {
+                NavigationManager!.NavigateTo(NavigationManager.Uri, true);
             }
 
             StateHasChanged();

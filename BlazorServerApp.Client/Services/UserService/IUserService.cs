@@ -4,6 +4,6 @@ namespace BlazorServerApp.Client.Services.UserService
 {
     public interface IUserService
     {
-        Task<List<User>> GetAll();
+        Task<List<User>> GetAll(bool isOnline);
     }
 }

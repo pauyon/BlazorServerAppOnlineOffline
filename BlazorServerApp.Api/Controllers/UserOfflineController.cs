@@ -1,4 +1,4 @@
-﻿using BlazorServerApp.DataStorageSqlServer;
+﻿using BlazorServerApp.DataStorageSqlite;
 using BlazorServerApp.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -7,19 +7,19 @@ namespace BlazorServerApp.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class UserOfflineController : ControllerBase
     {
-        private readonly SqlServerDataContext _sqlServerContext;
+        private readonly SqliteDataContext _sqliteContext;
 
-        public UserController(SqlServerDataContext sqlServerContext)
+        public UserOfflineController(SqliteDataContext sqliteContext)
         {
-            _sqlServerContext = sqlServerContext;
+            _sqliteContext = sqliteContext;
         }
 
         [HttpGet]
         public async Task<ActionResult<List<User>>> GetAllUsers()
         {
-            var users = await _sqlServerContext.Users.ToListAsync();
+            var users = await _sqliteContext.Users.ToListAsync();
 
             return Ok(users);
         }
@@ -27,7 +27,7 @@ namespace BlazorServerApp.Api.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<List<User>>> GetUser(int id)
         {
-            var user = await _sqlServerContext.Users.FindAsync(id);
+            var user = await _sqliteContext.Users.FindAsync(id);
 
             if (user == null)
             {
@@ -40,10 +40,10 @@ namespace BlazorServerApp.Api.Controllers
         [HttpPost]
         public async Task<ActionResult<List<User>>> AddUser(User user)
         {
-            _sqlServerContext.Users.Add(user);
-            await _sqlServerContext.SaveChangesAsync();
+            _sqliteContext.Users.Add(user);
+            await _sqliteContext.SaveChangesAsync();
 
-            return Ok(await _sqlServerContext.Users.ToListAsync());
+            return Ok(await _sqliteContext.Users.ToListAsync());
         }
     }
 }

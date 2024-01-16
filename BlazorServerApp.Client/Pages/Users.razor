@@ -1,9 +1,20 @@
 ﻿@page "/users"
 @inject IUserService UserService
 
-<PageTitle>Users</PageTitle>
+<PageTitle> Users </PageTitle>
 
-<h1>Users</h1>
+<MudStack Row="true">
+    <MudText Typo="Typo.h2">Users</MudText>
+    @if (!SiteConstants.IsOnline)
+    {
+        <MudText Typo="Typo.h4">(Offline)</MudText>
+    }
+</MudStack>
+
+@if (!SiteConstants.IsOnline)
+{
+    <MudAlert Severity="Severity.Warning">No Internet. Data will be stored locally and will need to be synced once a connection returns.</MudAlert>
+}
 
 @if (_users == null)
 {
@@ -26,7 +37,7 @@ else
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-        _users = await UserService.GetAll();
+        _users = await UserService.GetAll(SiteConstants.IsOnline);
         StateHasChanged();
     }
 }
