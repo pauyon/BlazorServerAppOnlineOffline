@@ -1,5 +1,4 @@
-﻿using BlazorServerApp.Client.Shared;
-using BlazorServerApp.Client.Shared.Dialogs;
+﻿using BlazorServerApp.Client.Shared.Dialogs;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using MudBlazor;
@@ -11,9 +10,6 @@ namespace BlazorServerApp.Client.Components
     /// </summary>
     public partial class Connection
     {
-        [CascadingParameter]
-        public MainLayout? MainLayout { get; set; }
-
         [Inject]
         public IJSRuntime? JsRuntime { get; set; }
 
@@ -39,14 +35,13 @@ namespace BlazorServerApp.Client.Components
         [JSInvokable("Connection.StatusChanged")]
         public void OnConnectionStatusChanged(bool isOnline)
         {
+            var refreshPage = ConnectionStatus.IsOnline != isOnline;
+
             if (IsOnline != isOnline)
             {
                 IsOnline = isOnline;
+                ConnectionStatus.IsOnline = isOnline;
             }
-
-            var refreshPage = SiteConstants.IsOnline != isOnline;
-
-            SiteConstants.IsOnline = isOnline;
 
             if (refreshPage)
             {

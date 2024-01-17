@@ -1,17 +1,16 @@
 ﻿@page "/users"
-@inject IUserService UserService
 
 <PageTitle> Users </PageTitle>
 
 <MudStack Row="true">
     <MudText Typo="Typo.h2">Users</MudText>
-    @if (!SiteConstants.IsOnline)
+    @if (!ConnectionStatus.IsOnline)
     {
         <MudText Typo="Typo.h4">(Offline)</MudText>
     }
 </MudStack>
 
-@if (!SiteConstants.IsOnline)
+@if (!ConnectionStatus.IsOnline)
 {
     <MudAlert Severity="Severity.Warning">No Internet. Data will be stored locally and will need to be synced once a connection returns.</MudAlert>
 }
@@ -29,15 +28,4 @@ else
             <PropertyColumn Property="x => x.Email" />
         </Columns>
     </MudDataGrid>
-}
-
-@code {
-    private List<User>? _users;
-
-    protected override async Task OnInitializedAsync()
-    {
-        await base.OnInitializedAsync();
-        _users = await UserService.GetAll(SiteConstants.IsOnline);
-        StateHasChanged();
-    }
 }

@@ -1,6 +1,4 @@
 ﻿@page "/fetchdata"
-@inject IWeatherForecastService ForecastService
-
 <PageTitle>Weather forecast</PageTitle>
 
 <MudText Typo="Typo.h2">Weather forecast</MudText>
@@ -21,13 +19,4 @@ else
             <PropertyColumn Property="x => x.Summary" />
         </Columns>
     </MudDataGrid>
-}
-
-@code {
-    private List<WeatherForecast>? forecasts;
-
-    protected override async Task OnInitializedAsync()
-    {
-        forecasts = await ForecastService.GetForecastAsync();
-    }
 }
